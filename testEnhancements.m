@@ -19,7 +19,7 @@
 %%%% Above this is all about testing individually
 % Below is outputting all modified files to folder
 
-image_src = 'OG';  % Alternative is 'cropped'
+image_src = 'cropped';  % Alternative is 'cropped'
 image_dest = 'im_adj'; % Folder
 image_mod = '_imadj'; % what does this do to it
 image_ext = 'png';  % Don't include .
@@ -33,7 +33,7 @@ files = dir(strcat(src, '*.', image_ext));
 for file = files'
     I = rgb2gray(imread(strcat(src, file.name)));
     I_adj = imadjust(I);
-    imshow([I, I_adj]);
+    %imshow([I, I_adj]);
     parts = strsplit(file.name, '.');
     newFile = strcat(dest, '/', parts(1), image_mod, '.', image_ext);
     disp(newFile);
