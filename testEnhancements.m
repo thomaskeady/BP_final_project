@@ -20,20 +20,24 @@
 % Below is outputting all modified files to folder
 
 image_src = 'OG';  % Alternative is 'cropped'
-image_dest = 'im_adj' % Also what are you doig to this? Name location accordingly
-image_ext = 'png':  % Don't include .
+image_dest = 'im_adj'; % Folder
+image_mod = '_imadj'; % what does this do to it
+image_ext = 'png';  % Don't include .
 
-src = strcat('images/', image_src, '*.', image_ext);
-dest = strcat('images/', image_src, '/', image_dest);
+src = strcat('images/', image_src, '/');
+dest = strcat(src, image_dest);
 
-source = 
+mkdir(dest);
 
-files = dir(src);
+files = dir(strcat(src, '*.', image_ext));
 for file = files'
-    I = rgb2gray(imread(file.name));
-    i_adj = imadjust(I);
+    I = rgb2gray(imread(strcat(src, file.name)));
+    I_adj = imadjust(I);
     imshow([I, I_adj]);
-    imwrite(I_adj, 
+    parts = strsplit(file.name, '.');
+    newFile = strcat(dest, '/', parts(1), image_mod, '.', image_ext);
+    disp(newFile);
+    imwrite(I_adj, newFile{1});
 end
 
 
