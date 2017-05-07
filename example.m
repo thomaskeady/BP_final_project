@@ -4,12 +4,18 @@
 %rgb = imread('2.png');
 %rgb = imread('3.png');
 %rgb = imread('f.png'); % Finds maxima next to air bubble line
-%rgb = imread('k.png'); % Works real good
+%rgb = imread('images/OG/k.png'); % Works real good
 %rgb = imread('t.png'); % Threshold open-close works alright, watershed does not
 %rgb = imread('u.png'); % Watershed does not work, maxima does find
 %rgb = imread('u_noEdge.png'); % Maxima works, watershed doesnt really
 
-I = rgb2gray(rgb);
+image_src = 'cropped/im_adj/';
+image_name = '2_noEdge_imadj.png';
+
+rgb = imread(strcat('images/', image_src, image_name));
+
+%I = rgb2gray(rgb);
+I = rgb; % already gray!
 imshow(I)
 
 text(732,501,'Image courtesy of Corel(R)',...
