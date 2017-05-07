@@ -1,4 +1,5 @@
-% Taken from https://www.mathworks.com/help/images/examples/marker-controlled-watershed-segmentation.html?prodcode=IP&language=en
+% Taken from https://www.mathworks.com/help/images/examples/marker-
+%controlled-watershed-segmentation.html?prodcode=IP&language=en
 
 %rgb = imread('../pears_segmentation/pears.png');
 %rgb = imread('2.png');
