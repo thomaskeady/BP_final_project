@@ -19,7 +19,7 @@
 %%%% Above this is all about testing individually
 % Below is outputting all modified files to folder
 
-image_src = 'cropped';  % Alternative is 'cropped'
+image_src = 'cropped/hist/OC20';  % Alternative is 'cropped'
 image_dest = 'edge/canny'; % Folder
 image_mod = '_edge_canny'; % what does this do to it
 image_ext = 'png';  % Don't include .
@@ -33,13 +33,16 @@ se = strel('disk', 20);
 
 files = dir(strcat(src, '*.', image_ext));
 for file = files'
-    I = rgb2gray(imread(strcat(src, file.name)));
-    %I = imread(strcat(src, file.name));
+    %I = rgb2gray(imread(strcat(src, file.name)));
+    I = imread(strcat(src, file.name));
+    
     %I_adj = adapthisteq(I);
     %Io = imopen(I, se);
     %I_adj = imclose(Io, se);
-    I_adj = edge(I, 'canny');
     
+    %I_adj = edge(I);    % Sobel
+    %I_adj = edge(I, 'log');
+    I_adj = edge(I, 'canny');
     
     %imshow([I, I_adj]);
     
