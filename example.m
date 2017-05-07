@@ -10,7 +10,7 @@
 %rgb = imread('u_noEdge.png'); % Maxima works, watershed doesnt really
 
 image_src = 'cropped/im_adj/';
-image_name = '2_noEdge_imadj.png';
+image_name = 'w_noEdge_imadj.png';
 
 rgb = imread(strcat('images/', image_src, image_name));
 
