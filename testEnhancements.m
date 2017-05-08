@@ -20,8 +20,8 @@
 % Below is outputting all modified files to folder
 
 image_src = 'cropped/hist/OC20/edge/canny';  % Alternative is 'cropped'
-image_dest = 'binarize'; % Folder
-image_mod = '_bw'; % what does this do to it
+image_dest = 'DE20'; % Folder
+image_mod = '_DE20'; % what does this do to it
 image_ext = 'png';  % Don't include .
 
 src = strcat('images/', image_src, '/');
@@ -29,7 +29,7 @@ dest = strcat(src, image_dest);
 
 mkdir(dest);
 
-se = strel('disk', 50);
+se = strel('disk', 20);
 
 files = dir(strcat(src, '*.', image_ext));
 for file = files'
@@ -41,7 +41,11 @@ for file = files'
     %I_adj = imopen(I, se);
     %I_adj = imclose(Io, se);
     
-    I_adj = imbinarize(I);
+    Io = imdilate(I, se);
+    
+    imshow(Io);
+    
+    I_adj = imerode(Io, se);
     
     %I_adj = edge(I);    % Sobel
     %I_adj = edge(I, 'log');
