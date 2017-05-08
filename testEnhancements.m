@@ -19,7 +19,7 @@
 %%%% Above this is all about testing individually
 % Below is outputting all modified files to folder
 
-image_src = 'cropped/hist/OC20/edge/canny';  % Alternative is 'cropped'
+image_src = 'cropped/hist/OC50/edge/log';  % Alternative is 'cropped'
 image_dest = 'DE20'; % Folder
 image_mod = '_DE20'; % what does this do to it
 image_ext = 'png';  % Don't include .
@@ -42,9 +42,6 @@ for file = files'
     %I_adj = imclose(Io, se);
     
     Io = imdilate(I, se);
-    
-    imshow(Io);
-    
     I_adj = imerode(Io, se);
     
     %I_adj = edge(I);    % Sobel
