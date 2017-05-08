@@ -19,9 +19,9 @@
 %%%% Above this is all about testing individually
 % Below is outputting all modified files to folder
 
-image_src = 'cropped/hist/OC20';  % Alternative is 'cropped'
-image_dest = 'edge/canny'; % Folder
-image_mod = '_edge_canny'; % what does this do to it
+image_src = 'cropped/hist/OC20/edge/canny';  % Alternative is 'cropped'
+image_dest = 'noLoops'; % Folder
+image_mod = '_noLoops'; % what does this do to it
 image_ext = 'png';  % Don't include .
 
 src = strcat('images/', image_src, '/');
@@ -42,7 +42,9 @@ for file = files'
     
     %I_adj = edge(I);    % Sobel
     %I_adj = edge(I, 'log');
-    I_adj = edge(I, 'canny');
+    %I_adj = edge(I, 'canny');
+    
+    I_adj = regionprops
     
     %imshow([I, I_adj]);
     
