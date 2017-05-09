@@ -19,9 +19,9 @@
 %%%% Above this is all about testing individually
 % Below is outputting all modified files to folder
 
-image_src = 'cropped/hist/OC50/edge/log';  % Alternative is 'cropped'
-image_dest = 'DE20'; % Folder
-image_mod = '_DE20'; % what does this do to it
+image_src = 'cropped/hist/OC50/edge/canny';  % Alternative is 'cropped'
+image_dest = 'D10E15'; % Folder
+image_mod = '_D10E15'; % what does this do to it
 image_ext = 'png';  % Don't include .
 
 src = strcat('images/', image_src, '/');
@@ -29,7 +29,8 @@ dest = strcat(src, image_dest);
 
 mkdir(dest);
 
-se = strel('disk', 20);
+seD = strel('disk', 10);
+seE = strel('disk', 15);
 
 files = dir(strcat(src, '*.', image_ext));
 for file = files'
@@ -41,8 +42,8 @@ for file = files'
     %I_adj = imopen(I, se);
     %I_adj = imclose(Io, se);
     
-    Io = imdilate(I, se);
-    I_adj = imerode(Io, se);
+    Io = imdilate(I, seD);
+    I_adj = imerode(Io, seE);
     
     %I_adj = edge(I);    % Sobel
     %I_adj = edge(I, 'log');
