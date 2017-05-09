@@ -1,7 +1,7 @@
 % Display properties from regionprops
 
 image_src = 'cropped/hist/OC50/edge/canny/D10E15';  % Alternative is 'cropped'
-image_name = '3_noEdge_hist_OC_edge_canny_D10E15';
+image_name = 'k_noEdge_hist_OC_edge_canny_D10E15';
 image_ext = 'png';
 
 I = imread(strcat('images/', image_src, '/', image_name, '.', image_ext));
@@ -37,24 +37,38 @@ for i = 1:height(stats)
     end
 end 
 
+xs = [];
+ys = [];
 
-% 
-% x_length = size(I, 2);   % good
-% 
-% for i = 1:height(stats)
-%     if stats{i, 1} ~= max
-%         p = stats{i, 2};
-%         list = p{1}';
-%         
-%         for pix = list
-%             y = floor(pix / x_length) + 1;
-%             
-%             x = mod(pix, size(I, 1));
-%             
-%             I(x, y)
-%             
-%         end
-%     end
-% end            
+for i = 1:height(stats)
+    if stats{i, 1} == max
+        p = stats{i, 2};
+        list = p{1}';
+        
+        for pix = list
+            rando = rand;
+            if rando < 0.001
+                xs = [xs, pix(2)];
+                ys = [ys, pix(1)];
+                
+            end 
+        end
+    end
+end 
 
-imshow(I);
+[xfit,yfit,Rfit] = circfit(xs,ys);
+
+figure
+plot(xs,ys,'b.')
+hold on
+rectangle('position',[xfit-Rfit,yfit-Rfit,Rfit*2,Rfit*2],...
+    'curvature',[1,1],'linestyle','-','edgecolor','r');
+title(sprintf('Best fit: R = %0.1f; Ctr = (%0.1f,%0.1f)',...
+    Rfit,xfit,yfit));
+plot(xfit,yfit,'g.')
+xlim([xfit-Rfit-2,xfit+Rfit+2])
+ylim([yfit-Rfit-2,yfit+Rfit+2])
+axis equal
+
+
+%imshow(I);
