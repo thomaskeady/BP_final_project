@@ -1,7 +1,7 @@
 % Go from color image to circle with radius
 clear all;
 
-input = 'images/cropped/t_noEdge.png';
+input = 'images/cropped/f_c_noEdge.png';
 %input = 'images/cropped/k_noEdge.png';
 %input = 'images/cropped/t_noEdge.png';
 
@@ -124,3 +124,15 @@ xlim([xfit-Rfit-2,xfit+Rfit+2])
 ylim([yfit-Rfit-2,yfit+Rfit+2])
 axis equal
 
+figure;
+subplot(1, 2, 1);
+imshow(rgb);
+subplot(1, 2, 2);
+plot(xs,ys,'b.')
+hold on
+rectangle('position',[xfit-Rfit,yfit-Rfit,Rfit*2,Rfit*2],...
+    'curvature',[1,1],'linestyle','-','edgecolor','r');
+title(sprintf('Best fit: R = %0.1f', Rfit));
+plot(xfit,yfit,'g.')
+xlim([xfit-Rfit-2,xfit+Rfit+2])
+ylim([yfit-Rfit-2,yfit+Rfit+2])
