@@ -19,7 +19,7 @@
 %%%% Above this is all about testing individually
 % Below is outputting all modified files to folder
 
-image_src = 'cropped/hist/OC50/edge/canny';  % Alternative is 'cropped'
+image_src = 'cropped/hist/OC50/edge/canny/D10E15';  % Alternative is 'cropped'
 image_dest = 'D10E15'; % Folder
 image_mod = '_D10E15'; % what does this do to it
 image_ext = 'png';  % Don't include .

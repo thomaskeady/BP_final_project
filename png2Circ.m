@@ -1,15 +1,36 @@
-% Display properties from regionprops
+% Go from color image to circle with radius
 
-image_src = 'cropped/hist/OC50/edge/log/D10E15';  % Alternative is 'cropped'
-image_name = '2_noEdge_hist_OC_edge_log_D10E15';
-image_ext = 'png';
+input = '';
 
-I = imread(strcat('images/', image_src, '/', image_name, '.', image_ext));
+% Get rgb
+rgb = imread(input);
+
+% make gray
+I = rbg2gray(rgb);
+
+% hist
+hist = histeq(I);
+
+% OC50
+se = strel('disk', 50);
+Io = imopen(hist, se);
+OC = imclose(Io, se);
+
+% edge what kind??
+%edgy = edge(OC);          % Sobel(last resort)
+edgy = edge(OC, 'log');   % log
+%edgy = edge(OC, 'canny'); % canny
+
+% D10E15
+seD = strel('disk', 10);
+seE = strel('disk', 15);
+eD = imdilate(edgy, seD);
+eE = imerode(eD, seE);
 
 %stats = regionprops('table', I, 'Area', 'PixelIdxList');
-stats = regionprops('table', I, 'Area', 'PixelList');
+stats = regionprops('table', eE, 'Area', 'PixelList');
 
-disp(stats);
+%disp(stats);
 
 max = 0;
 
@@ -31,11 +52,13 @@ for i = 1:height(stats)
         for pix = list
             %disp(I(pix(2), pix(1)));
             %temp2 = I(pix(2), pix(1));
-            I(pix(2), pix(1)) = 0;
+            eE(pix(2), pix(1)) = 0;
             
         end
     end
 end 
+
+
 
 xs = [];
 ys = [];
@@ -63,12 +86,9 @@ plot(xs,ys,'b.')
 hold on
 rectangle('position',[xfit-Rfit,yfit-Rfit,Rfit*2,Rfit*2],...
     'curvature',[1,1],'linestyle','-','edgecolor','r');
-title(sprintf('Best fit: R = %0.1f; Ctr = (%0.1f,%0.1f)',...
-    Rfit,xfit,yfit));
+title(sprintf('Best fit: R = %0.1f', Rfit));
 plot(xfit,yfit,'g.')
 xlim([xfit-Rfit-2,xfit+Rfit+2])
 ylim([yfit-Rfit-2,yfit+Rfit+2])
 axis equal
 
-
-%imshow(I);
