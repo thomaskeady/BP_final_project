@@ -1,0 +1,33 @@
+% Display properties from regionprops
+
+image_src = 'cropped/hist/OC50/edge/canny/D10E15';  % Alternative is 'cropped'
+image_name = '2_noEdge_hist_OC_edge_canny_D10E15';
+image_ext = 'png';
+
+I = imread(strcat('images/', image_src, '/', image_name, '.', image_ext));
+
+stats = regionprops('table', I, 'Area', 'PixelIdxList');
+
+disp(stats);
+
+max = 0;
+
+for i = 1:height(stats)
+    if stats{i, 1} > max
+        max = stats{i, 1};
+    end 
+end
+
+mod = size(I, 2);   % good
+
+for i = 1:height(stats)
+    if stats{i, 1} ~= max
+        for p = stats{i, 2}
+            y = floor(p / mod) + 1;
+            x = mod(p, mod);
+            I(x, y)
+            
+        end
+    end
+end            
+%imshow(I);
