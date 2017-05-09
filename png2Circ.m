@@ -1,31 +1,59 @@
 % Go from color image to circle with radius
+clear all;
 
-input = '';
+input = 'images/cropped/f_noEdge.png';
+
+figure;
 
 % Get rgb
 rgb = imread(input);
 
+subplot(3, 3, 1);
+imshow(rgb);
+title('Raw image');
+
 % make gray
-I = rbg2gray(rgb);
+I = rgb2gray(rgb);
+
+subplot(3, 3, 2);
+imshow(I);
+title('Grayscale');
 
 % hist
 hist = histeq(I);
+
+subplot(3, 3, 3);
+imshow(hist);
+title('Histogram Equalization');
 
 % OC50
 se = strel('disk', 50);
 Io = imopen(hist, se);
 OC = imclose(Io, se);
 
+subplot(3, 3, 4);
+imshow(OC);
+title('Open-closing');
+
+
 % edge what kind??
 %edgy = edge(OC);          % Sobel(last resort)
 edgy = edge(OC, 'log');   % log
 %edgy = edge(OC, 'canny'); % canny
+
+subplot(3, 3, 5);
+imshow(edgy);
+title('Edge Detection');
 
 % D10E15
 seD = strel('disk', 10);
 seE = strel('disk', 15);
 eD = imdilate(edgy, seD);
 eE = imerode(eD, seE);
+
+subplot(3, 3, 6);
+imshow(eE);
+title('Dialate-Erode');
 
 %stats = regionprops('table', I, 'Area', 'PixelIdxList');
 stats = regionprops('table', eE, 'Area', 'PixelList');
@@ -58,7 +86,9 @@ for i = 1:height(stats)
     end
 end 
 
-
+subplot(3, 3, 7);
+imshow(eE);
+title('Isolate Largest Feature');
 
 xs = [];
 ys = [];
@@ -72,7 +102,7 @@ for i = 1:height(stats)
             rando = rand;
             if rando < 0.001
                 xs = [xs, pix(1)];
-                ys = [ys, pix(2)];
+                ys = [ys, -pix(2)];
                 
             end 
         end
@@ -81,7 +111,7 @@ end
 
 [xfit,yfit,Rfit] = circfit(xs,ys);
 
-figure
+subplot(3, 3, 8);
 plot(xs,ys,'b.')
 hold on
 rectangle('position',[xfit-Rfit,yfit-Rfit,Rfit*2,Rfit*2],...
