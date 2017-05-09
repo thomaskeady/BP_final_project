@@ -1,7 +1,9 @@
 % Go from color image to circle with radius
 clear all;
 
-input = 'images/cropped/f_noEdge.png';
+input = 'images/cropped/t_noEdge.png';
+%input = 'images/cropped/k_noEdge.png';
+%input = 'images/cropped/t_noEdge.png';
 
 figure;
 
@@ -38,8 +40,8 @@ title('Open-closing');
 
 % edge what kind??
 %edgy = edge(OC);          % Sobel(last resort)
-edgy = edge(OC, 'log');   % log
-%edgy = edge(OC, 'canny'); % canny
+%edgy = edge(OC, 'log');   % log
+edgy = edge(OC, 'canny'); % canny
 
 subplot(3, 3, 5);
 imshow(edgy);
